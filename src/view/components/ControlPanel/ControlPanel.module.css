@@ -1,0 +1,11 @@
+.panel {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn {
+  height: 50px;
+}

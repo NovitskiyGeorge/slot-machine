@@ -1,0 +1,2 @@
+export const STATUS_GAME_START = "STATUS_GAME_START";
+export const STATUS_GAME_STOP = "STATUS_GAME_STOP";
