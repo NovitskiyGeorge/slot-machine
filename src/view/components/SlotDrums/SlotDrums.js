@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { useSelector } from "react-redux";
 
 export const SlotDrums = (props) => {
   const [seven, cherry, banana, slots] = useLoader(TextureLoader, [
@@ -10,28 +9,55 @@ export const SlotDrums = (props) => {
     "./img/seven.png",
     "./img/slots.png",
   ]);
-  const { color } = props;
+  const { color, statusGame } = props;
+  const timerIncreaseSpeedRef = useRef(null);
+  const timerDecreaseSpeedRef = useRef(null);
   const ref = useRef();
 
-  // const statusGame = useSelector((state) => state.statusGame);
+  const [speedRotation, setSpeedRotation] = useState(0);
 
-  // if (statusGame) {
-  // }
+  useEffect(() => {
+    if (statusGame) {
+      increaseRotationSpeed();
+    } else {
+      decreaseRotationSpeed();
+    }
+  }, [statusGame]);
 
-  useFrame((state, delta) => (ref.current.rotation.x += 0.01));
+  useEffect(() => {
+    console.log(ref.current.rotation.x);
+    if (speedRotation <= 0) {
+      clearInterval(timerDecreaseSpeedRef.current);
+    }
+  }, [speedRotation]);
 
-  // useFrame((state, delta) => (ref.current.position.x = 1));
+  const increaseRotationSpeed = () => {
+    timerIncreaseSpeedRef.current = setInterval(() => {
+      setSpeedRotation((speedRotation) => (speedRotation += (2 * Math.PI) / 5));
+      // setSpeedRotation((speedRotation) => (speedRotation += 0.01));
+    }, 500);
+  };
 
-  // useFrame((state, delta) => (position={Vector3(-100, -200, -100)}));
+  const decreaseRotationSpeed = () => {
+    clearInterval(timerIncreaseSpeedRef.current);
+    timerDecreaseSpeedRef.current = setInterval(() => {
+      setSpeedRotation((speedRotation) => (speedRotation -= (2 * Math.PI) / 5));
+    }, 500);
+  };
+
+  useFrame(
+    (state, delta) =>
+      // console.log(ref.current),
+      (ref.current.rotation.x += speedRotation)
+    // if(ref.current.rotation.x && !speedRotation) {
+
+    // }
+  );
 
   return (
     <mesh {...props} ref={ref}>
-      <cylinderGeometry args={[1, 1, 2, 20]} />
+      <cylinderGeometry args={[1, 1, 2, 60]} />
       <meshStandardMaterial color={color} map={slots} />
     </mesh>
-    //   <mesh {...props} ref={ref}>
-    //   <boxGeometry args={[2, 2, 2]} />
-    //   <meshStandardMaterial color={color} map={cherry} />
-    // </mesh>
   );
 };
