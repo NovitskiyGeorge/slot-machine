@@ -9,9 +9,13 @@ export const SlotDrums = (props) => {
     "./img/seven.png",
     "./img/slots.png",
   ]);
-  const { color, statusGame } = props;
-  const timerIncreaseSpeedRef = useRef(null);
-  const timerDecreaseSpeedRef = useRef(null);
+  const [randomSpeedRotation, setRandomSpeedRotation] = useState(
+    Math.floor(Math.random() * 500)
+  );
+
+  const { color, statusGame, changeStatusButton } = props;
+  const timerIncreaseSpeedIdRef = useRef(null);
+  const timerDecreaseSpeedIdRef = useRef(null);
   const ref = useRef();
 
   const [speedRotation, setSpeedRotation] = useState(0);
@@ -25,34 +29,26 @@ export const SlotDrums = (props) => {
   }, [statusGame]);
 
   useEffect(() => {
-    console.log(ref.current.rotation.x);
-    if (speedRotation <= 0) {
-      clearInterval(timerDecreaseSpeedRef.current);
+    if (!statusGame && speedRotation <= 0) {
+      clearInterval(timerDecreaseSpeedIdRef.current);
+      changeStatusButton();
     }
   }, [speedRotation]);
 
   const increaseRotationSpeed = () => {
-    timerIncreaseSpeedRef.current = setInterval(() => {
+    timerIncreaseSpeedIdRef.current = setInterval(() => {
       setSpeedRotation((speedRotation) => (speedRotation += (2 * Math.PI) / 5));
-      // setSpeedRotation((speedRotation) => (speedRotation += 0.01));
-    }, 500);
+    }, randomSpeedRotation);
   };
 
   const decreaseRotationSpeed = () => {
-    clearInterval(timerIncreaseSpeedRef.current);
-    timerDecreaseSpeedRef.current = setInterval(() => {
+    clearInterval(timerIncreaseSpeedIdRef.current);
+    timerDecreaseSpeedIdRef.current = setInterval(() => {
       setSpeedRotation((speedRotation) => (speedRotation -= (2 * Math.PI) / 5));
-    }, 500);
+    }, randomSpeedRotation);
   };
 
-  useFrame(
-    (state, delta) =>
-      // console.log(ref.current),
-      (ref.current.rotation.x += speedRotation)
-    // if(ref.current.rotation.x && !speedRotation) {
-
-    // }
-  );
+  useFrame((state, delta) => (ref.current.rotation.x += speedRotation));
 
   return (
     <mesh {...props} ref={ref}>

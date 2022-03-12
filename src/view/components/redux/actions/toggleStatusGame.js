@@ -1,12 +1,12 @@
 import { STATUS_GAME_START, STATUS_GAME_STOP } from "./actionTypes";
 
-export function setStatusPlayStart() {
+export function setStatusGameStart() {
   return {
     type: STATUS_GAME_START,
   };
 }
 
-export function setStatusPlayStop() {
+export function setStatusGameStop() {
   return {
     type: STATUS_GAME_STOP,
   };
