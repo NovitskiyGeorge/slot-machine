@@ -2,14 +2,18 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { SlotDrums } from "../SlotDrums/SlotDrums";
 import { useSelector, useDispatch } from "react-redux";
-import { setStatusBtnStop } from "../redux/actions/toggleStatusButton.js";
+import {
+  setStatusBtnStartOn,
+  setStatusBtnStopOff,
+} from "../redux/actions/toggleStatusButton.js";
 
 export const DisplaySlots = () => {
   const statusGame = useSelector((state) => state.statusGame);
   const dispatch = useDispatch();
 
   const changeStatusButton = () => {
-    dispatch(setStatusBtnStop());
+    dispatch(setStatusBtnStopOff());
+    dispatch(setStatusBtnStartOn());
   };
 
   return (

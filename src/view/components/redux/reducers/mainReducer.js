@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
-import { statusButtonReducer } from "./statusBtnReducer";
+import {
+  statusButtonStartReducer,
+  statusButtonStopReducer,
+} from "./statusBtnReducer";
 import { statusGameReducer } from "./statusGameReducer";
 
 const reducers = {
   statusGame: statusGameReducer,
-  statusButton: statusButtonReducer,
+  statusButtonStart: statusButtonStartReducer,
+  statusButtonStop: statusButtonStopReducer,
 };
 
 const mainReducer = combineReducers(reducers);
