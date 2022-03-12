@@ -1,16 +1,36 @@
 import {
-  STATUS_BUTTON_START,
-  STATUS_BUTTON_STOP,
+  STATUS_BUTTON_START_ON,
+  STATUS_BUTTON_START_OFF,
+  STATUS_BUTTON_STOP_ON,
+  STATUS_BUTTON_STOP_OFF,
 } from "../actions/actionTypes";
 
-const initialStatus = false;
+const initialStatusBtnStart = false;
+const initialStatusBtnSttop = false;
 
-export const statusButtonReducer = (state = initialStatus, action) => {
+export const statusButtonStartReducer = (
+  state = initialStatusBtnStart,
+  action
+) => {
   switch (action.type) {
-    case STATUS_BUTTON_START:
-      return true;
-    case STATUS_BUTTON_STOP:
+    case STATUS_BUTTON_START_ON:
       return false;
+    case STATUS_BUTTON_START_OFF:
+      return true;
+    default:
+      return state;
+  }
+};
+
+export const statusButtonStopReducer = (
+  state = initialStatusBtnSttop,
+  action
+) => {
+  switch (action.type) {
+    case STATUS_BUTTON_STOP_ON:
+      return false;
+    case STATUS_BUTTON_STOP_OFF:
+      return true;
     default:
       return state;
   }

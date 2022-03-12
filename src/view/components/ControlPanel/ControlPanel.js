@@ -6,24 +6,27 @@ import {
   setStatusGameStart,
 } from "../redux/actions/toggleStatusGame";
 import {
-  setStatusBtnStart,
-  setStatusBtnStop,
+  setStatusBtnStartOff,
+  setStatusBtnStopOff,
+  setStatusBtnStopOn,
 } from "../redux/actions/toggleStatusButton.js";
 import { setStatusPlayStopTimer } from "../redux/thunk/asyncToggleStatusGame";
 
 export const ControlPanel = () => {
-  const statusButton = useSelector((state) => state.statusButton);
+  const statusButtonStart = useSelector((state) => state.statusButtonStart);
+  const statusButtonStop = useSelector((state) => state.statusButtonStop);
   const dispatch = useDispatch();
 
   const startGame = () => {
     dispatch(setStatusGameStart());
-    dispatch(setStatusBtnStart());
+    dispatch(setStatusBtnStartOff());
+    dispatch(setStatusBtnStopOn());
     dispatch(setStatusPlayStopTimer());
   };
 
-  const stoptGame = () => {
+  const stopGame = () => {
     dispatch(setStatusGameStop());
-    dispatch(setStatusBtnStop());
+    dispatch(setStatusBtnStopOff());
   };
 
   return (
@@ -31,7 +34,7 @@ export const ControlPanel = () => {
       <Button
         variant="contained"
         className={styles.btn}
-        disabled={statusButton}
+        disabled={statusButtonStart}
         onClick={() => startGame()}
       >
         PLAY
@@ -39,8 +42,8 @@ export const ControlPanel = () => {
       <Button
         variant="contained"
         className={styles.btn}
-        disabled={!statusButton}
-        onClick={() => stoptGame()}
+        disabled={statusButtonStop}
+        onClick={() => stopGame()}
       >
         STOP
       </Button>
