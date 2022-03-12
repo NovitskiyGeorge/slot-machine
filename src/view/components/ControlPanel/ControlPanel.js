@@ -2,20 +2,28 @@ import styles from "./ControlPanel.module.css";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setStatusPlayStop,
-  setStatusPlayStart,
-} from "../redux/actions/toggleStatusPlay";
+  setStatusGameStop,
+  setStatusGameStart,
+} from "../redux/actions/toggleStatusGame";
+import {
+  setStatusBtnStart,
+  setStatusBtnStop,
+} from "../redux/actions/toggleStatusButton.js";
+import { setStatusPlayStopTimer } from "../redux/thunk/asyncToggleStatusGame";
 
 export const ControlPanel = () => {
-  const statusGame = useSelector((state) => state.statusGame);
+  const statusButton = useSelector((state) => state.statusButton);
   const dispatch = useDispatch();
 
   const startGame = () => {
-    dispatch(setStatusPlayStart());
+    dispatch(setStatusGameStart());
+    dispatch(setStatusBtnStart());
+    dispatch(setStatusPlayStopTimer());
   };
 
   const stoptGame = () => {
-    dispatch(setStatusPlayStop());
+    dispatch(setStatusGameStop());
+    dispatch(setStatusBtnStop());
   };
 
   return (
@@ -23,7 +31,7 @@ export const ControlPanel = () => {
       <Button
         variant="contained"
         className={styles.btn}
-        disabled={statusGame}
+        disabled={statusButton}
         onClick={() => startGame()}
       >
         PLAY
@@ -31,6 +39,7 @@ export const ControlPanel = () => {
       <Button
         variant="contained"
         className={styles.btn}
+        disabled={!statusButton}
         onClick={() => stoptGame()}
       >
         STOP
