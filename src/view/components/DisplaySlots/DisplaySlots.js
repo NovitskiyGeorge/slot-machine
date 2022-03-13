@@ -24,6 +24,12 @@ export const DisplaySlots = () => {
         <SlotDrums
           changeStatusButton={() => changeStatusButton()}
           statusGame={statusGame}
+          position={[-3, 0, 0]}
+          rotation={[Math.PI, 0, Math.PI / 2]}
+        ></SlotDrums>
+        <SlotDrums
+          changeStatusButton={() => changeStatusButton()}
+          statusGame={statusGame}
           position={[0, 0, 0]}
           rotation={[Math.PI, 0, Math.PI / 2]}
         ></SlotDrums>
@@ -33,8 +39,6 @@ export const DisplaySlots = () => {
           position={[3, 0, 0]}
           rotation={[Math.PI, 0, Math.PI / 2]}
         ></SlotDrums>
-        {/* <SlotDrums color="blue" position={[0, 0, 0]}></SlotDrums>
-        <SlotDrums color="gray" position={[-2, 0, 0]}></SlotDrums> */}
       </Canvas>
     </Suspense>
   );

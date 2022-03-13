@@ -10,7 +10,7 @@ export const SlotDrums = (props) => {
     "./img/slots.png",
   ]);
   const [randomSpeedRotation, setRandomSpeedRotation] = useState(
-    Math.floor(Math.random() * 500)
+    Math.floor(Math.random() * 100)
   );
 
   const { color, statusGame, changeStatusButton } = props;
@@ -21,33 +21,47 @@ export const SlotDrums = (props) => {
   const [speedRotation, setSpeedRotation] = useState(0);
 
   useEffect(() => {
-    if (statusGame) {
-      increaseRotationSpeed();
-    } else {
-      decreaseRotationSpeed();
+    switch (statusGame) {
+      case "start":
+        increaseRotationSpeed();
+        break;
+      case "stop":
+        decreaseRotationSpeed();
+        break;
+      default:
+        break;
     }
   }, [statusGame]);
 
   useEffect(() => {
-    if (!statusGame && speedRotation <= 0) {
+    if (statusGame === "stop" && speedRotation <= 0) {
       clearInterval(timerDecreaseSpeedIdRef.current);
       changeStatusButton();
+      calcRestRotation();
     }
   }, [speedRotation]);
 
   const increaseRotationSpeed = () => {
     timerIncreaseSpeedIdRef.current = setInterval(() => {
-      setSpeedRotation((speedRotation) => (speedRotation += (2 * Math.PI) / 5));
+      setSpeedRotation((speedRotation) => (speedRotation += 0.01));
     }, randomSpeedRotation);
   };
 
   const decreaseRotationSpeed = () => {
     clearInterval(timerIncreaseSpeedIdRef.current);
     timerDecreaseSpeedIdRef.current = setInterval(() => {
-      setSpeedRotation((speedRotation) => (speedRotation -= (2 * Math.PI) / 5));
+      setSpeedRotation((speedRotation) => (speedRotation -= 0.01));
     }, randomSpeedRotation);
   };
 
+  const calcRestRotation = () => {
+    const currentRotationValue =
+      ((ref.current.rotation.x - Math.PI) % (2 * Math.PI)) %
+      ((1 / 5) * 2 * Math.PI);
+
+    const restValue = (2 * Math.PI) / 5 - currentRotationValue;
+    ref.current.rotation.x += restValue;
+  };
   useFrame((state, delta) => (ref.current.rotation.x += speedRotation));
 
   return (
