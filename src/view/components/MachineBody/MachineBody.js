@@ -3,7 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 export const MachineBody = () => {
-  const body = useLoader(TextureLoader, "./img/body2.png");
+  const body = useLoader(TextureLoader, "./img/body.png");
 
   const [ref] = usePlane(() => ({
     rotation: [0, 0, 0],
