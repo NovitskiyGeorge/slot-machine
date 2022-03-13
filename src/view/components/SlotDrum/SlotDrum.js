@@ -16,6 +16,10 @@ export const SlotDrum = (props) => {
   const ref = useRef();
 
   useEffect(() => {
+    changeRandomSpeedRotation();
+  }, []);
+
+  useEffect(() => {
     switch (statusGame) {
       case "start":
         increaseRotationSpeed();
@@ -33,7 +37,7 @@ export const SlotDrum = (props) => {
       clearInterval(timerDecreaseSpeedIdRef.current);
       changeStatusButton();
       calcRestRotation();
-      getRandomSpeedRotation();
+      changeRandomSpeedRotation();
     }
   }, [speedRotation]);
 
@@ -45,23 +49,23 @@ export const SlotDrum = (props) => {
     }
   }, [restRotation]);
 
-  const getRandomSpeedRotation = () => {
+  const changeRandomSpeedRotation = () => {
     setRandomSpeedRotation(
       (randomSpeedRotation) =>
-        (randomSpeedRotation = Math.floor(Math.random() * 200))
+        (randomSpeedRotation = Math.floor(Math.random() * 100))
     );
   };
 
   const increaseRotationSpeed = () => {
     timerIncreaseSpeedIdRef.current = setInterval(() => {
-      setSpeedRotation((speedRotation) => (speedRotation += 0.01));
+      setSpeedRotation((speedRotation) => (speedRotation += 0.003));
     }, randomSpeedRotation);
   };
 
   const decreaseRotationSpeed = () => {
     clearInterval(timerIncreaseSpeedIdRef.current);
     timerDecreaseSpeedIdRef.current = setInterval(() => {
-      setSpeedRotation((speedRotation) => (speedRotation -= 0.01));
+      setSpeedRotation((speedRotation) => (speedRotation -= 0.003));
     }, randomSpeedRotation);
   };
 
