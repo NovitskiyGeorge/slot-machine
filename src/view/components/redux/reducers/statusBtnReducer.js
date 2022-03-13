@@ -6,7 +6,7 @@ import {
 } from "../actions/actionTypes";
 
 const initialStatusBtnStart = false;
-const initialStatusBtnSttop = false;
+const initialStatusBtnSttop = true;
 
 export const statusButtonStartReducer = (
   state = initialStatusBtnStart,
