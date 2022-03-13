@@ -3,17 +3,19 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 export const SlotDrums = (props) => {
+  const { color, statusGame, changeStatusButton } = props;
+
   const [slots] = useLoader(TextureLoader, ["./img/slots.png"]);
+  const [restRotation, setRestRotation] = useState(0);
+  const [speedRotation, setSpeedRotation] = useState(0);
   const [randomSpeedRotation, setRandomSpeedRotation] = useState(
-    Math.floor(Math.random() * 100)
+    Math.floor(Math.random() * 50)
   );
 
-  const { color, statusGame, changeStatusButton } = props;
   const timerIncreaseSpeedIdRef = useRef(null);
   const timerDecreaseSpeedIdRef = useRef(null);
+  const timerRestRotationRef = useRef(null);
   const ref = useRef();
-
-  const [speedRotation, setSpeedRotation] = useState(0);
 
   useEffect(() => {
     switch (statusGame) {
@@ -36,6 +38,14 @@ export const SlotDrums = (props) => {
     }
   }, [speedRotation]);
 
+  useEffect(() => {
+    if (restRotation > 0) {
+      timerRestRotationRef.current = setInterval(() => {
+        addRotation();
+      }, 10);
+    }
+  }, [restRotation]);
+
   const increaseRotationSpeed = () => {
     timerIncreaseSpeedIdRef.current = setInterval(() => {
       setSpeedRotation((speedRotation) => (speedRotation += 0.01));
@@ -53,9 +63,18 @@ export const SlotDrums = (props) => {
     const currentRotationValue =
       ((ref.current.rotation.x - Math.PI) % (2 * Math.PI)) %
       ((1 / 5) * 2 * Math.PI);
-    const restValue = (2 * Math.PI) / 5 - currentRotationValue;
-    ref.current.rotation.x += restValue;
+    setRestRotation(
+      (restRotation) =>
+        (restRotation = (2 * Math.PI) / 5 - currentRotationValue)
+    );
   };
+
+  const addRotation = () => {
+    setRestRotation((restRotation) => (restRotation -= 0.01));
+    clearInterval(timerRestRotationRef.current);
+    ref.current.rotation.x += 0.01;
+  };
+
   useFrame((state, delta) => (ref.current.rotation.x += speedRotation));
 
   return (
