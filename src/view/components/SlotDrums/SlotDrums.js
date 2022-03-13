@@ -58,7 +58,6 @@ export const SlotDrums = (props) => {
     const currentRotationValue =
       ((ref.current.rotation.x - Math.PI) % (2 * Math.PI)) %
       ((1 / 5) * 2 * Math.PI);
-
     const restValue = (2 * Math.PI) / 5 - currentRotationValue;
     ref.current.rotation.x += restValue;
   };
