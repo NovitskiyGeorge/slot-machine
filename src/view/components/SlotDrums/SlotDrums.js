@@ -3,12 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 
 export const SlotDrums = (props) => {
-  const [seven, cherry, banana, slots] = useLoader(TextureLoader, [
-    "./img/seven.png",
-    "./img/cherry.png",
-    "./img/seven.png",
-    "./img/slots.png",
-  ]);
+  const [slots] = useLoader(TextureLoader, ["./img/slots.png"]);
   const [randomSpeedRotation, setRandomSpeedRotation] = useState(
     Math.floor(Math.random() * 100)
   );
