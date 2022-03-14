@@ -7,13 +7,10 @@ https://novitskiygeorge.github.io/slot-machine/
 
 You can find the source code in the branch main.
 
-```
 ## Node and NPM
 
 Required node version = ^17, npm = ^8 (any newer version may not work)
-```
 
-```
 ## Run build
 
 ### npm install
@@ -25,7 +22,6 @@ Build the application for production. The built application can then be found at
 ### npm install -g serve
 
 ### serve -s build
-```
 
 ## Development mode locally
 
