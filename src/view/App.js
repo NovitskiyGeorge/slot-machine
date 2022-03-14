@@ -7,13 +7,7 @@ import { ControlPanel } from "./components/ControlPanel";
 
 import "./App.css";
 
-const store = createStore(
-  mainReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
+const store = createStore(mainReducer, compose(applyMiddleware(thunk)));
 
 function App() {
   return (
